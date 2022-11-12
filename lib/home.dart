@@ -74,6 +74,7 @@ class _HomeState extends State<Home> {
                     user: memedata[index]['author'],
                     title: memedata[index]['title'],
                     ImageUrl: memedata[index]['url'],
+                    postUrl: memedata[index]['postLink'],
                   ),
                 ),
               )
