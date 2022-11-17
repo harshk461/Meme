@@ -18,8 +18,8 @@ class _HomeState extends State<Home> {
   late ScrollController _controller;
   getMeme() async {
     try {
-      Response response = await http.get(
-          Uri.parse('https://meme-api.herokuapp.com/gimme/ProgrammerHumor/50'));
+      Response response = await http.get(Uri.parse(
+          'https://meme-api.herokuapp.com/gimme/intrestingasfuck/50'));
       Map<dynamic, dynamic> data = jsonDecode(response.body);
       setState(() {
         memedata = data['memes'];
@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
         !_controller.position.outOfRange) {
       try {
         Response response = await http.get(Uri.parse(
-            'https://meme-api.herokuapp.com/gimme/ProgrammerHumor/50'));
+            'https://meme-api.herokuapp.com/gimme/intrestingasfuck/50'));
         Map<dynamic, dynamic> data = jsonDecode(response.body);
         setState(() {
           memedata = data['memes'];
