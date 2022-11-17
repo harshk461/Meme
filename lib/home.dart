@@ -15,6 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<dynamic> memedata = [];
+  late ScrollController _controller;
   getMeme() async {
     try {
       Response response = await http.get(
@@ -30,8 +31,30 @@ class _HomeState extends State<Home> {
     }
   }
 
+  _scollListener() async {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      try {
+        Response response = await http.get(Uri.parse(
+            'https://meme-api.herokuapp.com/gimme/ProgrammerHumor/50'));
+        Map<dynamic, dynamic> data = jsonDecode(response.body);
+        setState(() {
+          memedata = data['memes'];
+        });
+      } catch (e) {
+        Expanded(
+          child: Text(e.toString()),
+        );
+      }
+    } else {
+      print("No");
+    }
+  }
+
   @override
   void initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getMeme();
     });
@@ -67,6 +90,7 @@ class _HomeState extends State<Home> {
               ),
               Expanded(
                 child: ListView.builder(
+                  controller: _controller,
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemCount: memedata.length,
